@@ -7,29 +7,41 @@ public class aJenda {
 	public static void main(String[] args) {
 
 		Scanner leer = new Scanner(System.in);
-		int tam = 10, opcionMenu=0;
-		boolean salir=false;
+		int tam = 10, opcionMenu = 0;
+		boolean salir = false;
 		String mContactos[][] = new String[tam][2];
 
 		inicializarMatriz(mContactos);
 
-		mContactos[2][0] = "Fulano";
-		mContactos[2][1] = "123456";
-		mContactos[9][0] = "Zutano";
-		mContactos[9][1] = "838276";
+		mContactos[0][0] = "Juan García";
+		mContactos[0][1] = "632879852";
+		mContactos[2][0] = "María Jiménez";
+		mContactos[2][1] = "662388725";
+		mContactos[5][0] = "Tomás Generelo";
+		mContactos[5][1] = "647909667";
 
 		ordenarContactos(mContactos);
-		
+
 		do {
-			opcionMenu=mostrarMenu();
-			
+			boolean error = false;
+			do {
+				opcionMenu = mostrarMenu();
+				if (opcionMenu < 1 || opcionMenu > 6) {
+					error = true;
+					System.out.println("ERROR: Opción no válida. Por favor, inténtalo de nuevo.");
+					System.out.println();
+				} else {
+					break;
+				}
+			} while (error = true);
+
 			switch (opcionMenu) {
 			case 1: {
 				verContactos(mContactos);
 				break;
 			}
 			case 2: {
-				buscarContacto();
+				buscarContacto(mContactos);
 				break;
 			}
 			case 3: {
@@ -38,26 +50,28 @@ public class aJenda {
 			}
 			case 4: {
 				modificarContacto(mContactos);
-				break;	
+				break;
 			}
 			case 5: {
 				eliminarContacto(mContactos);
 				break;
 			}
 			case 6: {
-				
 				break;
 			}
 			}
-			
+
 			System.out.println();
-			
-			salir=salir();
-			
-		} while (salir==false);
-		
-		
-		
+			if (opcionMenu == 6) {
+				salir = true;
+			} else {
+				salir = salir();
+			}
+
+		} while (salir == false);
+
+		System.out.println("Gracias por utilizar aJenda.\nEl programa se cerrará.");
+
 	}
 
 // /////////////// FUNCIONES /////////////// //
@@ -93,18 +107,18 @@ public class aJenda {
 		int opcionMenu = 0;
 
 		System.out.println("--------------------------------------------------");
-		System.out.println("              AGENDA - MENÚ PRINCIPAL             ");
+		System.out.println("              aJenda - MENÚ PRINCIPAL             ");
 		System.out.println("--------------------------------------------------");
 		System.out.println("1) Ver contactos          4) Modificar un contacto  ");
 		System.out.println("2) Buscar un contacto     5) Eliminar un contacto   ");
 		System.out.println("3) Añadir un contacto     6) Salir                  ");
-		
+
 		System.out.println();
-		System.out.print("Introduce la opción deseada: ");
+		System.out.print("Introduce la opción deseada: > ");
 		opcionMenu = leer.nextInt();
 
 		System.out.println();
-		
+
 		return opcionMenu;
 	}
 
@@ -113,8 +127,7 @@ public class aJenda {
 		int agendaVacia = 0;
 		for (int i = 0; i < mContactos.length; i++) {
 			if (!(mContactos[i][0].equals("") & mContactos[i][1].equals(""))) {
-				System.out.print("CONTACTO " + (i + 1) + ": ");
-				System.out.println(mContactos[i][0] + " - " + mContactos[i][1]);
+				mostrarContacto(mContactos, i);
 				agendaVacia++;
 			}
 
@@ -126,99 +139,133 @@ public class aJenda {
 
 	// MOSTRAR UN CONTACTO
 	public static void mostrarContacto(String mContactos[][], int numContacto) {
-		System.out.print("CONTACTO " + (numContacto) + ": ");
-		System.out.println(mContactos[numContacto-1][0] + " - " + mContactos[numContacto-1][1]);
+		System.out.print("CONTACTO " + (numContacto + 1) + ": ");
+		System.out.println(mContactos[numContacto][0] + " - " + mContactos[numContacto][1]);
 	}
-	
-	// BUSCAR CONTACTOS
-	public static void buscarContacto() {
 
+	// BUSCAR CONTACTOS
+	public static void buscarContacto(String mContactos[][]) {
+		Scanner leer = new Scanner(System.in);
+		String userInput = "";
+		int contador = 0;
+
+		System.out.print("  Introduce parte del nombre o teléfono del contacto: > ");
+		userInput = leer.nextLine();
+
+		System.out.println();
+
+		for (int i = 0; i < mContactos.length; i++) {
+			if (contador == 0) {
+				System.out.println("  Se han encontrado las siguientes coincidencias:\n");
+			}
+			for (int j = 0; j < mContactos[i][0].length() - userInput.length(); j++) {
+				if (userInput.equalsIgnoreCase(mContactos[i][0].substring(j, j + userInput.length()))
+						|| userInput.equalsIgnoreCase(mContactos[i][1].substring(j,
+								j + userInput.length()))) { /*
+															 * Da error porque este campo es más corto. Habría que hacer
+															 * dos for individuales bajo la misma i y un break; cuando
+															 * encuentre un resultado.
+															 */
+					mostrarContacto(mContactos, i);
+					contador += 1;
+					break;
+				}
+			}
+		}
+
+		System.out.println();
+
+		if (contador == 0) {
+			System.out.println("No se ha encontrado ninguna coincidencia.");
+		}
 	}
 
 	// AÑADIR CONTACTO
 	public static void agregarContacto(String mContactos[][]) {
-		String nombreContacto="", numContacto="";
 		Scanner leer = new Scanner(System.in);
-		
-		System.out.print("Introduce el nombre del nuevo contacto: ");
-		nombreContacto=leer.nextLine();
-		System.out.println("Introduce el número de teléfono: ");
-		numContacto=leer.nextLine();
-		
-		for (int i=0; i<mContactos.length; i++) {
+
+		for (int i = 0; i < mContactos.length; i++) {
 			if (mContactos[i][0].equals("") & mContactos[i][1].equals("")) {
-				mContactos[i][0]=nombreContacto;
-				mContactos[i][1]=numContacto;
-				System.out.println("El contacto se ha guardado con éxito como CONTACTO " + (i+1) + ".");
+				System.out.print("  Introduce el nombre del nuevo contacto: > ");
+				mContactos[i][0] = leer.nextLine();
+				System.out.print("  Introduce el número de teléfono: > ");
+				mContactos[i][1] = leer.nextLine();
+				System.out.println();
+				System.out.println("El contacto se ha guardado con éxito como CONTACTO " + (i + 1) + ".");
 				break;
-				
+			} else {
+				if (i == mContactos.length - 1) {
+					System.out.println("La agenda está llena.");
+				}
 			}
 		}
 	}
 
 	// MODIFICAR CONTACTO
 	public static void modificarContacto(String mContactos[][]) {
-		Scanner leer=new Scanner(System.in);
-		int idContacto=0;
-		
-		System.out.print("Introduce el ID del contacto que deseas modificar: ");
-		idContacto=leer.nextInt();
-		
+		Scanner leer = new Scanner(System.in);
+		int idContacto = 0;
+
+		System.out.print("  Introduce el ID del contacto que deseas modificar: > ");
+		idContacto = leer.nextInt();
+
 		System.out.println();
 		System.out.println("Se modificará el siguiente contacto:");
-		mostrarContacto(mContactos, idContacto);
+		mostrarContacto(mContactos, idContacto - 1);
 		System.out.println();
-		System.out.println("Nombre: ");
-		mContactos[idContacto-1][0]=leer.nextLine();
-		System.out.println("Telf: ");
-		mContactos[idContacto-1][1]=leer.nextLine();
-		
-		
+		leer = new Scanner(System.in);
+		System.out.print("  Introduce el nuevo nombre del contacto: > ");
+		mContactos[idContacto - 1][0] = leer.nextLine();
+		leer = new Scanner(System.in);
+		System.out.print("  Introduce el nuevo teléfono del contacto: >  ");
+		mContactos[idContacto - 1][1] = leer.nextLine();
+
+		System.out.println();
 		System.out.println("El contacto se ha guardado correctamente.");
-		
-		
+
 	}
 
 	// ELIMINAR CONTACTO
 	public static void eliminarContacto(String mContactos[][]) {
-		Scanner leer=new Scanner(System.in);
-		String userInput="";
-		int numContacto=0;
-		
-		System.out.print("Introduce el ID del contacto que deseas eliminar: ");
-		numContacto=leer.nextInt();
-		
+		Scanner leer = new Scanner(System.in);
+		String userInput = "";
+		int numContacto = 0;
+
+		System.out.print("  Introduce el ID del contacto que deseas eliminar: > ");
+		numContacto = leer.nextInt();
+
 		System.out.println();
 		System.out.println("Se eliminará el siguiente contacto:");
-		mostrarContacto(mContactos, numContacto);
+		mostrarContacto(mContactos, numContacto - 1);
 		System.out.println();
-		System.out.println("¿Estás seguro? (S/N: )");
-		userInput=leer.next();
+		System.out.print("  ¿Estás seguro? (S/N: ) > ");
+		userInput = leer.next();
 		if (userInput.equalsIgnoreCase("s")) {
-			mContactos[numContacto-1][0]="";
-			mContactos[numContacto-1][1]="";
+			mContactos[numContacto - 1][0] = "";
+			mContactos[numContacto - 1][1] = "";
 			ordenarContactos(mContactos);
+			System.out.println();
 			System.out.println("El contacto se ha eliminado correctamente.\nLos contactos se han reordenado.");
 		}
 	}
 
 	// SALIR
 	public static boolean salir() {
-		Scanner leer=new Scanner(System.in);
-		String userInput="";
-		boolean salir=false;
-		
-		System.out.print("¿Quieres volver al menú? (S/N): ");
-		userInput=leer.next();
-		
+		Scanner leer = new Scanner(System.in);
+		String userInput = "";
+		boolean salir = false;
+
+		System.out.print("¿Quieres volver al menú? (S/N): > ");
+		userInput = leer.next();
+
 		if (userInput.equalsIgnoreCase("s")) {
-			salir=false;
+			salir = false;
 		} else {
-			salir=true;
+			salir = true;
 		}
-		
+
 		System.out.println();
-		
+
 		return salir;
 	}
 
