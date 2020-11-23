@@ -13,12 +13,24 @@ public class aJenda {
 
 		inicializarMatriz(mContactos);
 
-		mContactos[0][0] = "Juan García";
-		mContactos[0][1] = "632879852";
-		mContactos[2][0] = "María Jiménez";
-		mContactos[2][1] = "662388725";
-		mContactos[5][0] = "Tomás Generelo";
-		mContactos[5][1] = "647909667";
+		mContactos[0][0] = "José Sazatornil";
+		mContactos[0][1] = "611111111";
+		mContactos[1][0] = "Yennefer de Vengerberg";
+		mContactos[1][1] = "622222222";
+		mContactos[2][0] = "Felipe Castro";
+		mContactos[2][1] = "633333333";
+		mContactos[3][0] = "Enrique González";
+		mContactos[3][1] = "644444444";
+		mContactos[4][0] = "María Ibáñez";
+		mContactos[4][1] = "655555555";
+		mContactos[5][0] = "Martín Pescador";
+		mContactos[5][1] = "666666666";
+		mContactos[6][0] = "Joaquín de Luis";
+		mContactos[6][1] = "677777777";
+		mContactos[7][0] = "David Robert Jones";
+		mContactos[7][1] = "688888888";
+		mContactos[8][0] = "Íñigo Montoya";
+		mContactos[8][1] = "699999999";
 
 		ordenarContactos(mContactos);
 
@@ -27,9 +39,13 @@ public class aJenda {
 			do {
 				opcionMenu = mostrarMenu();
 				if (opcionMenu < 1 || opcionMenu > 6) {
-					error = true;
-					System.out.println("ERROR: Opción no válida. Por favor, inténtalo de nuevo.");
-					System.out.println();
+					if (opcionMenu == 22688) {
+						about();
+					} else {
+						error = true;
+						System.out.println("ERROR: Opción no válida. Por favor, inténtalo de nuevo.");
+						System.out.println();
+					}
 				} else {
 					break;
 				}
@@ -61,7 +77,6 @@ public class aJenda {
 			}
 			}
 
-			System.out.println();
 			if (opcionMenu == 6) {
 				salir = true;
 			} else {
@@ -71,7 +86,6 @@ public class aJenda {
 		} while (salir == false);
 
 		System.out.println("Gracias por utilizar aJenda.\nEl programa se cerrará.");
-
 	}
 
 // /////////////// FUNCIONES /////////////// //
@@ -109,9 +123,9 @@ public class aJenda {
 		System.out.println("--------------------------------------------------");
 		System.out.println("              aJenda - MENÚ PRINCIPAL             ");
 		System.out.println("--------------------------------------------------");
-		System.out.println("1) Ver contactos          4) Modificar un contacto  ");
-		System.out.println("2) Buscar un contacto     5) Eliminar un contacto   ");
-		System.out.println("3) Añadir un contacto     6) Salir                  ");
+		System.out.println("1) Ver contactos          4) Modificar un contacto");
+		System.out.println("2) Buscar un contacto     5) Eliminar un contacto ");
+		System.out.println("3) Añadir un contacto     6) Salir                ");
 
 		System.out.println();
 		System.out.print("Introduce la opción deseada: > ");
@@ -124,16 +138,22 @@ public class aJenda {
 
 	// VER CONTACTOS
 	public static void verContactos(String mContactos[][]) {
-		int agendaVacia = 0;
+		boolean agendaVacia = true;
+
+		System.out.println(" -------------------");
+		System.out.println(" TODOS LOS CONTACTOS");
+		System.out.println(" -------------------");
+
 		for (int i = 0; i < mContactos.length; i++) {
 			if (!(mContactos[i][0].equals("") & mContactos[i][1].equals(""))) {
+				System.out.print(" ");
 				mostrarContacto(mContactos, i);
-				agendaVacia++;
+				agendaVacia = false;
 			}
 
 		}
-		if (agendaVacia == 0) {
-			System.out.println("No se ha añadido ningún contacto.");
+		if (agendaVacia == true) {
+			System.out.println(" No se ha añadido ningún contacto todavía. La agenda está vacía.");
 		}
 	}
 
@@ -149,31 +169,43 @@ public class aJenda {
 		String userInput = "";
 		int contador = 0;
 
-		System.out.print("  Introduce parte del nombre o teléfono del contacto: > ");
+		System.out.println(" --------");
+		System.out.println(" BÚSQUEDA");
+		System.out.println(" --------");
+
+		System.out.print(" Introduce parte del nombre o teléfono del contacto que deseas buscar:\n > ");
 		userInput = leer.nextLine();
 
 		System.out.println();
 
 		for (int i = 0; i < mContactos.length; i++) {
-			if (contador == 0) {
-				System.out.println("  Se han encontrado las siguientes coincidencias:\n");
-			}
-			for (int j = 0; j < mContactos[i][0].length() - userInput.length(); j++) {
-				if (userInput.equalsIgnoreCase(mContactos[i][0].substring(j, j + userInput.length()))
-						|| userInput.equalsIgnoreCase(mContactos[i][1].substring(j,
-								j + userInput.length()))) { /*
-															 * Da error porque este campo es más corto. Habría que hacer
-															 * dos for individuales bajo la misma i y un break; cuando
-															 * encuentre un resultado.
-															 */
-					mostrarContacto(mContactos, i);
-					contador += 1;
+			boolean encontrado;
+			encontrado = false;
+
+			for (int j = 0; j < mContactos[i][0].length() - userInput.length() + 1; j++) {
+				if (userInput.equalsIgnoreCase(mContactos[i][0].substring(j, j + userInput.length()))) {
+					encontrado = true;
+					contador++;
 					break;
 				}
 			}
-		}
 
-		System.out.println();
+			for (int j = 0; j < mContactos[i][1].length() - userInput.length() + 1; j++) {
+				if (userInput.equalsIgnoreCase(mContactos[i][1].substring(j, j + userInput.length()))) {
+					encontrado = true;
+					contador++;
+					break;
+				}
+			}
+
+			if (encontrado == true) {
+				if (contador == 1) {
+					System.out.println(" Se han encontrado las siguientes coincidencias:\n");
+				}
+				System.out.print("  ");
+				mostrarContacto(mContactos, i);
+			}
+		}
 
 		if (contador == 0) {
 			System.out.println("No se ha encontrado ninguna coincidencia.");
@@ -183,6 +215,10 @@ public class aJenda {
 	// AÑADIR CONTACTO
 	public static void agregarContacto(String mContactos[][]) {
 		Scanner leer = new Scanner(System.in);
+
+		System.out.println(" ------------------------");
+		System.out.println(" AÑADIR UN NUEVO CONTACTO");
+		System.out.println(" ------------------------");
 
 		for (int i = 0; i < mContactos.length; i++) {
 			if (mContactos[i][0].equals("") & mContactos[i][1].equals("")) {
@@ -195,7 +231,8 @@ public class aJenda {
 				break;
 			} else {
 				if (i == mContactos.length - 1) {
-					System.out.println("La agenda está llena.");
+					System.out.println(
+							" ERROR: La agenda está llena. Elimina algún registro para añadir nuevos contactos.");
 				}
 			}
 		}
@@ -204,24 +241,37 @@ public class aJenda {
 	// MODIFICAR CONTACTO
 	public static void modificarContacto(String mContactos[][]) {
 		Scanner leer = new Scanner(System.in);
+		String userInput = "";
 		int idContacto = 0;
 
-		System.out.print("  Introduce el ID del contacto que deseas modificar: > ");
+		System.out.println(" ---------------------");
+		System.out.println(" MODIFICAR UN CONTACTO");
+		System.out.println(" ---------------------");
+
+		System.out.print(" Introduce el ID del contacto que deseas modificar: > ");
 		idContacto = leer.nextInt();
 
 		System.out.println();
-		System.out.println("Se modificará el siguiente contacto:");
+		System.out.println(" Se modificará el siguiente contacto:");
+		System.out.print("  ");
 		mostrarContacto(mContactos, idContacto - 1);
 		System.out.println();
+		System.out.print(" ¿Es correcto? (S/N): > ");
 		leer = new Scanner(System.in);
-		System.out.print("  Introduce el nuevo nombre del contacto: > ");
-		mContactos[idContacto - 1][0] = leer.nextLine();
-		leer = new Scanner(System.in);
-		System.out.print("  Introduce el nuevo teléfono del contacto: >  ");
-		mContactos[idContacto - 1][1] = leer.nextLine();
+		userInput = leer.nextLine();
+		if (userInput.equalsIgnoreCase("s")) {
+			leer = new Scanner(System.in);
+			System.out.print(" Introduce el nuevo nombre del contacto: > ");
+			mContactos[idContacto - 1][0] = leer.nextLine();
+			leer = new Scanner(System.in);
+			System.out.print(" Introduce el nuevo teléfono del contacto: >  ");
+			mContactos[idContacto - 1][1] = leer.nextLine();
 
-		System.out.println();
-		System.out.println("El contacto se ha guardado correctamente.");
+			System.out.println();
+			System.out.println("El contacto se ha guardado correctamente.");
+		} else {
+			System.out.println(" El usuario canceló la operación. No se ha realizado ningún cambio.");
+		}
 
 	}
 
@@ -231,21 +281,27 @@ public class aJenda {
 		String userInput = "";
 		int numContacto = 0;
 
-		System.out.print("  Introduce el ID del contacto que deseas eliminar: > ");
+		System.out.println(" --------------------");
+		System.out.println(" ELIMINAR UN CONTACTO");
+		System.out.println(" --------------------");
+		System.out.print(" Introduce el ID del contacto que deseas eliminar: > ");
 		numContacto = leer.nextInt();
 
 		System.out.println();
-		System.out.println("Se eliminará el siguiente contacto:");
+		System.out.println(" Se eliminará el siguiente contacto:");
+		System.out.print("  ");
 		mostrarContacto(mContactos, numContacto - 1);
 		System.out.println();
-		System.out.print("  ¿Estás seguro? (S/N: ) > ");
+		System.out.print(" ¿Estás seguro? (S/N): > ");
 		userInput = leer.next();
 		if (userInput.equalsIgnoreCase("s")) {
 			mContactos[numContacto - 1][0] = "";
 			mContactos[numContacto - 1][1] = "";
 			ordenarContactos(mContactos);
 			System.out.println();
-			System.out.println("El contacto se ha eliminado correctamente.\nLos contactos se han reordenado.");
+			System.out.println(" El contacto se ha eliminado correctamente.\n Los contactos se han reordenado.");
+		} else {
+			System.out.println(" El usuario canceló la operación. No se ha realizado ningún cambio.");
 		}
 	}
 
@@ -255,6 +311,7 @@ public class aJenda {
 		String userInput = "";
 		boolean salir = false;
 
+		System.out.println();
 		System.out.print("¿Quieres volver al menú? (S/N): > ");
 		userInput = leer.next();
 
@@ -269,4 +326,16 @@ public class aJenda {
 		return salir;
 	}
 
+	// ABOUT
+	public static void about() {
+		System.out.println("--------------------------------------------------");
+		System.out.println("|              ACERCA DE aJenda 1.0              |");
+		System.out.println("--------------------------------------------------");
+		System.out.println("|          Gracias por utilizar aJenda,          |");
+		System.out.println("|                 con J de Java.                 |");
+		System.out.println("|                                                |");
+		System.out.println("|            (c) Tomás Generelo, 2020            |");
+		System.out.println("--------------------------------------------------");
+
+	}
 }
