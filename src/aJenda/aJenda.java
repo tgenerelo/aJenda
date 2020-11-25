@@ -338,7 +338,7 @@ public class aJenda {
 	// ABOUT
 	public static void about() {
 		System.out.println("--------------------------------------------------");
-		System.out.println("|              ACERCA DE aJenda 1.0              |");
+		System.out.println("|              ACERCA DE aJenda 1.1              |");
 		System.out.println("--------------------------------------------------");
 		System.out.println("|          Gracias por utilizar aJenda,          |");
 		System.out.println("|                 con J de Java.                 |");
