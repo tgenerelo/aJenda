@@ -180,6 +180,21 @@ public class aJenda {
 	}
 
 	/**
+	 * COMPROBAR ID VÁLIDO
+	 * @param mContactos	Matriz de contactos.
+	 * @param numContacto	ID de contacto introducido por el usuario que se comprobará.
+	 * @return
+	 */
+	public static boolean idValido(String mContactos[][], int numContacto) {
+		boolean valido=true;
+		if (numContacto<1|| numContacto>mContactos.length || (mContactos[numContacto-1][0].equals("")) & mContactos[numContacto-1][1].equals("")) {
+			System.out.println(" Error: el contacto no existe.\n  ");
+			valido=false;
+		}
+		return valido;
+	}
+	
+	/**
 	 * BUSCAR CONTACTOS
 	 * @param mContactos Matriz de contactos
 	 */
@@ -274,8 +289,16 @@ public class aJenda {
 		System.out.println(" MODIFICAR UN CONTACTO");
 		System.out.println(" ---------------------");
 
-		System.out.print(" Introduce el ID del contacto que deseas modificar: > ");
-		idContacto = leer.nextInt();
+		do {
+			System.out.print(" Introduce el ID del contacto que deseas modificar: > ");
+			idContacto = leer.nextInt();
+			if (idValido(mContactos, idContacto)==true) {
+				break;
+			} else {
+				idContacto=-1;
+			}
+		} while (idContacto==-1);
+		
 
 		System.out.println("\n Se modificará el siguiente contacto:");
 		System.out.print("  ");
@@ -320,9 +343,16 @@ public class aJenda {
 		System.out.println(" --------------------");
 		System.out.println(" ELIMINAR UN CONTACTO");
 		System.out.println(" --------------------");
-		System.out.print(" Introduce el ID del contacto que deseas eliminar: > ");
-		numContacto = leer.nextInt();
-
+		do {
+			System.out.print(" Introduce el ID del contacto que deseas eliminar: > ");
+			numContacto = leer.nextInt();
+			if (idValido(mContactos, numContacto)==true) {
+				break;
+			} else {
+				numContacto=-1;
+			}
+		} while (numContacto==-1);
+		
 		System.out.println("\n Se eliminará el siguiente contacto:");
 		System.out.print("  ");
 		mostrarContacto(mContactos, numContacto - 1);
@@ -387,7 +417,7 @@ public class aJenda {
 	 */
 	public static void about() {
 		System.out.println("--------------------------------------------------");
-		System.out.println("|              ACERCA DE aJenda 1.2              |");
+		System.out.println("|              ACERCA DE aJenda 1.3              |");
 		System.out.println("--------------------------------------------------");
 		System.out.println("|          Gracias por utilizar aJenda,          |");
 		System.out.println("|                 con J de Java.                 |");
