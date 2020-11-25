@@ -83,7 +83,7 @@ public class aJenda {
 				salir = salir();
 			}
 
-		} while (salir == false);
+		} while (!salir);
 
 		System.out.println("Gracias por utilizar aJenda.\nEl programa se cerrará.");
 	}
@@ -152,7 +152,7 @@ public class aJenda {
 			}
 
 		}
-		if (agendaVacia == true) {
+		if (agendaVacia) {
 			System.out.println(" No se ha añadido ningún contacto todavía. La agenda está vacía.");
 		}
 	}
@@ -198,7 +198,7 @@ public class aJenda {
 				}
 			}
 
-			if (encontrado == true) {
+			if (encontrado) {
 				if (contador == 1) {
 					System.out.println(" Se han encontrado las siguientes coincidencias:\n");
 				}
@@ -309,17 +309,26 @@ public class aJenda {
 	public static boolean salir() {
 		Scanner leer = new Scanner(System.in);
 		String userInput = "";
-		boolean salir = false;
+		boolean salir = false, error=false;
 
 		System.out.println();
-		System.out.print("¿Quieres volver al menú? (S/N): > ");
-		userInput = leer.next();
+		
+		do {
+			System.out.print("¿Quieres volver al menú? (S/N): > ");
+			userInput = leer.next();
 
-		if (userInput.equalsIgnoreCase("s")) {
-			salir = false;
-		} else {
-			salir = true;
-		}
+			if (userInput.equalsIgnoreCase("s")) {
+				salir = false;
+				error=false;
+			} else {
+				if (userInput.equalsIgnoreCase("n")) {
+					salir = true;
+					error=false;
+				} else {
+					error=true;
+				}
+			} 
+		} while (error);
 
 		System.out.println();
 
