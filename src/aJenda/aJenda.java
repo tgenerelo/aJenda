@@ -90,7 +90,10 @@ public class aJenda {
 
 // /////////////// FUNCIONES /////////////// //
 
-	// INICIALIZAR MATRIZ
+	/**
+	 * INICIALIZAR MATRIZ
+	 * @param mContactos Matriz de contactos
+	 */
 	public static void inicializarMatriz(String mContactos[][]) {
 		for (int i = 0; i < mContactos.length; i++) {
 			mContactos[i][0] = "";
@@ -99,7 +102,10 @@ public class aJenda {
 		}
 	}
 
-	// REORDENAR CONTACTOS
+	/**
+	 * REORDENAR CONTACTOS
+	 * @param mContactos Matriz de contactos
+	 */
 	public static void ordenarContactos(String mContactos[][]) {
 		for (int i = 0; i < mContactos.length - 1; i++) {
 			int j = i + 1;
@@ -115,7 +121,10 @@ public class aJenda {
 		}
 	}
 
-	// MOSTRAR MENÚ
+	/**
+	 * MOSTRAR MENÚ
+	 * @return La opción seleccionada
+	 */
 	public static int mostrarMenu() {
 		Scanner leer = new Scanner(System.in);
 		int opcionMenu = 0;
@@ -136,7 +145,10 @@ public class aJenda {
 		return opcionMenu;
 	}
 
-	// VER CONTACTOS
+	/**
+	 * VER CONTACTOS
+	 * @param mContactos Matriz de contactos
+	 */
 	public static void verContactos(String mContactos[][]) {
 		boolean agendaVacia = true;
 
@@ -157,13 +169,20 @@ public class aJenda {
 		}
 	}
 
-	// MOSTRAR UN CONTACTO
+	/**
+	 * MOSTRAR UN CONTACTO
+	 * @param mContactos Matriz de contactos
+	 * @param numContacto Número de fila de la que se recuperará la información
+	 */
 	public static void mostrarContacto(String mContactos[][], int numContacto) {
 		System.out.print("CONTACTO " + (numContacto + 1) + ": ");
 		System.out.println(mContactos[numContacto][0] + " - " + mContactos[numContacto][1]);
 	}
 
-	// BUSCAR CONTACTOS
+	/**
+	 * BUSCAR CONTACTOS
+	 * @param mContactos Matriz de contactos
+	 */
 	public static void buscarContacto(String mContactos[][]) {
 		Scanner leer = new Scanner(System.in);
 		String userInput = "";
@@ -212,7 +231,10 @@ public class aJenda {
 		}
 	}
 
-	// AÑADIR CONTACTO
+	/**
+	 * AÑADIR CONTACTO
+	 * @param mContactos Matriz de contactos
+	 */
 	public static void agregarContacto(String mContactos[][]) {
 		Scanner leer = new Scanner(System.in);
 
@@ -238,11 +260,15 @@ public class aJenda {
 		}
 	}
 
-	// MODIFICAR CONTACTO
+	/**
+	 * MODIFICAR CONTACTO
+	 * @param mContactos Matriz de contactos
+	 */
 	public static void modificarContacto(String mContactos[][]) {
 		Scanner leer = new Scanner(System.in);
 		String userInput = "";
 		int idContacto = 0;
+		boolean error=false;
 
 		System.out.println(" ---------------------");
 		System.out.println(" MODIFICAR UN CONTACTO");
@@ -251,35 +277,45 @@ public class aJenda {
 		System.out.print(" Introduce el ID del contacto que deseas modificar: > ");
 		idContacto = leer.nextInt();
 
-		System.out.println();
-		System.out.println(" Se modificará el siguiente contacto:");
+		System.out.println("\n Se modificará el siguiente contacto:");
 		System.out.print("  ");
 		mostrarContacto(mContactos, idContacto - 1);
 		System.out.println();
-		System.out.print(" ¿Es correcto? (S/N): > ");
-		leer = new Scanner(System.in);
-		userInput = leer.nextLine();
-		if (userInput.equalsIgnoreCase("s")) {
+		
+		do {
+			
+			System.out.print(" ¿Es correcto? (S/N): > ");
 			leer = new Scanner(System.in);
-			System.out.print(" Introduce el nuevo nombre del contacto: > ");
-			mContactos[idContacto - 1][0] = leer.nextLine();
-			leer = new Scanner(System.in);
-			System.out.print(" Introduce el nuevo teléfono del contacto: >  ");
-			mContactos[idContacto - 1][1] = leer.nextLine();
-
-			System.out.println();
-			System.out.println("El contacto se ha guardado correctamente.");
-		} else {
-			System.out.println(" El usuario canceló la operación. No se ha realizado ningún cambio.");
-		}
-
+			userInput = leer.nextLine();
+			if (userInput.equalsIgnoreCase("s")) {
+				leer = new Scanner(System.in);
+				System.out.print(" Introduce el nuevo nombre del contacto: > ");
+				mContactos[idContacto - 1][0] = leer.nextLine();
+				leer = new Scanner(System.in);
+				System.out.print(" Introduce el nuevo teléfono del contacto: >  ");
+				mContactos[idContacto - 1][1] = leer.nextLine();
+				System.out.println("\n El contacto se ha guardado correctamente.");
+				error=false;
+			} else {
+				if (userInput.equalsIgnoreCase("n")) {
+					System.out.println(" El usuario canceló la operación. No se ha realizado ningún cambio.");
+					error=false;
+				} else {
+					error=true;
+				}
+			}
+		} while (error);
 	}
 
-	// ELIMINAR CONTACTO
+	/**
+	 * ELIMINAR CONTACTO
+	 * @param mContactos Matriz de contactos
+	 */
 	public static void eliminarContacto(String mContactos[][]) {
 		Scanner leer = new Scanner(System.in);
 		String userInput = "";
 		int numContacto = 0;
+		boolean error=false;
 
 		System.out.println(" --------------------");
 		System.out.println(" ELIMINAR UN CONTACTO");
@@ -287,25 +323,36 @@ public class aJenda {
 		System.out.print(" Introduce el ID del contacto que deseas eliminar: > ");
 		numContacto = leer.nextInt();
 
-		System.out.println();
-		System.out.println(" Se eliminará el siguiente contacto:");
+		System.out.println("\n Se eliminará el siguiente contacto:");
 		System.out.print("  ");
 		mostrarContacto(mContactos, numContacto - 1);
 		System.out.println();
-		System.out.print(" ¿Estás seguro? (S/N): > ");
-		userInput = leer.next();
-		if (userInput.equalsIgnoreCase("s")) {
-			mContactos[numContacto - 1][0] = "";
-			mContactos[numContacto - 1][1] = "";
-			ordenarContactos(mContactos);
-			System.out.println();
-			System.out.println(" El contacto se ha eliminado correctamente.\n Los contactos se han reordenado.");
-		} else {
-			System.out.println(" El usuario canceló la operación. No se ha realizado ningún cambio.");
-		}
+		
+		do {
+			System.out.print(" ¿Estás seguro? (S/N): > ");
+			userInput = leer.next();
+			if (userInput.equalsIgnoreCase("s")) {
+				mContactos[numContacto - 1][0] = "";
+				mContactos[numContacto - 1][1] = "";
+				ordenarContactos(mContactos);
+				System.out.println();
+				System.out.println(" El contacto se ha eliminado correctamente.\n Los contactos se han reordenado.");
+				error=false;
+			} else {
+				if (userInput.equalsIgnoreCase("n")) {
+					System.out.println(" El usuario canceló la operación. No se ha realizado ningún cambio.");
+					error=false;
+				} else {
+					error=true;
+				}
+			}
+		} while (error);
 	}
 
-	// SALIR
+	/**
+	 * SALIR
+	 * @return Salir (salir del programa = true, volver al menú = false)
+	 */
 	public static boolean salir() {
 		Scanner leer = new Scanner(System.in);
 		String userInput = "";
@@ -335,11 +382,13 @@ public class aJenda {
 		return salir;
 	}
 
-	// ABOUT
+	/**
+	 * ABOUT
+	 */
 	public static void about() {
 		System.out.println("--------------------------------------------------");
-		System.out.println("|              ACERCA DE aJenda 1.1              |");
-		System.out.println("--------------------------------------------------");
+		System.out.println("|              ACERCA DE aJenda 1.2              |");
+		System.out.println("|------------------------------------------------|");
 		System.out.println("|          Gracias por utilizar aJenda,          |");
 		System.out.println("|                 con J de Java.                 |");
 		System.out.println("|                                                |");
