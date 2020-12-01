@@ -1,4 +1,4 @@
-# aJenda 1.3
+# aJenda 1.4
 
 ## Descripción
 aJenda (con J de Java) es una sencilla aplicación de almacenamiento de contactos realizada como práctica de clase. El programa posee almacenamiento para 10 contactos de los que 9 vienen ocupados por defecto directamente en el código.
