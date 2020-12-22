@@ -5,7 +5,7 @@ public class Principal {
 	public static void main(String[] args) {
 
 		int opcionMenu = 0, tam = 10;
-		boolean salir = false;
+		boolean volver = true;
 
 		Contacto vContactos[] = new Contacto[tam];
 		Metodos.inicializarVector(vContactos);
@@ -23,37 +23,43 @@ public class Principal {
 			case 1: {
 				Metodos.mostrarContactos(vContactos);
 				System.out.println();
-				salir = Metodos.volverMenu(); 
+				 
 				break;
 			}
 
 			case 2: {
-
+				Metodos.buscarContacto(vContactos);
 				break;
 			}
 
 			case 3: {
-
+				Metodos.nuevoContacto(vContactos);
 				break;
 			}
 
 			case 4: {
-
+				Metodos.modificarContacto(vContactos);
 				break;
 			}
 
 			case 5: {
-
+				Metodos.eliminarContacto(vContactos);
 				break;
 			}
 
 			case 6: {
-				salir = true;
+				volver = false;
 				break;
 			}
 
 			}
-		} while (salir == false);
+			
+			if (volver=true) {
+				volver = Metodos.volverMenu();
+			}
+			
+			
+		} while (volver == true);
 
 		System.out.println("Gracias por utilizar aJenda. El programa se cerrará.");
 
