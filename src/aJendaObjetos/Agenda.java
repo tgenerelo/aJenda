@@ -1,8 +1,41 @@
 package aJendaObjetos;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class Metodos {
+public class Agenda {
+
+	private String propietario;
+	private Contacto[] vAgenda;
+
+	public Agenda() {
+		propietario = "";
+		vAgenda = new Contacto[10];
+	}
+
+	public Agenda(String propietario) {
+		this.propietario = propietario;
+		vAgenda = new Contacto[10];
+	}
+
+	public Agenda(String propietario, int tam) {
+		this.propietario = propietario;
+		vAgenda = new Contacto[tam];
+	}
+	
+
+	public String getPropietario() {
+		return propietario;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return mostrarContactos(vContactos);;
+	}
+
+
 
 	static Scanner leer = new Scanner(System.in);
 
@@ -221,7 +254,7 @@ public class Metodos {
 	public static void buscarContacto(Contacto vContactos[]) {
 
 		String userInput = "";
-		int coincidenciaNombre = 0, coincidenciaApell=0, coincidenciaTlf=0;
+		int coincidenciaNombre = 0, coincidenciaApell = 0, coincidenciaTlf = 0;
 		leer = new Scanner(System.in);
 
 		System.out.print("Introduce un término de búsqueda: > ");
@@ -272,9 +305,9 @@ public class Metodos {
 			}
 		}
 
-		if (coincidenciaNombre == 0 & coincidenciaApell==0 & coincidenciaTlf==0) {
+		if (coincidenciaNombre == 0 & coincidenciaApell == 0 & coincidenciaTlf == 0) {
 			System.out.println("No se han encontrado coincidencias.\n");
 		}
-	System.out.println();
+		System.out.println();
 	}
 }

@@ -8,7 +8,7 @@ public class Principal {
 		boolean volver = true;
 
 		Contacto vContactos[] = new Contacto[tam];
-		Metodos.inicializarVector(vContactos);
+		Agenda.inicializarVector(vContactos);
 		vContactos[0] = new Contacto("Juan", "971111111");
 		vContactos[1] = new Contacto("Gordon", "Freeman", "912222222");
 		vContactos[2] = new Contacto("Yennefer", "de Vengerberg", "973333333");
@@ -19,31 +19,31 @@ public class Principal {
 		vContactos[7] = new Contacto("Alyx", "Vance", "95888888");
 
 		do {
-			switch (Metodos.menu()) {
+			switch (Agenda.menu()) {
 			case 1: {
-				Metodos.mostrarContactos(vContactos);
+				Agenda.mostrarContactos(vContactos);
 				System.out.println();
 				 
 				break;
 			}
 
 			case 2: {
-				Metodos.buscarContacto(vContactos);
+				Agenda.buscarContacto(vContactos);
 				break;
 			}
 
 			case 3: {
-				Metodos.nuevoContacto(vContactos);
+				Agenda.nuevoContacto(vContactos);
 				break;
 			}
 
 			case 4: {
-				Metodos.modificarContacto(vContactos);
+				Agenda.modificarContacto(vContactos);
 				break;
 			}
 
 			case 5: {
-				Metodos.eliminarContacto(vContactos);
+				Agenda.eliminarContacto(vContactos);
 				break;
 			}
 
@@ -55,7 +55,7 @@ public class Principal {
 			}
 			
 			if (volver=true) {
-				volver = Metodos.volverMenu();
+				volver = Agenda.volverMenu();
 			}
 			
 			
