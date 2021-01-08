@@ -4,46 +4,35 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		int opcionMenu = 0, tam = 10;
 		boolean volver = true;
 
-		Contacto vContactos[] = new Contacto[tam];
-		Agenda.inicializarVector(vContactos);
-		vContactos[0] = new Contacto("Juan", "971111111");
-		vContactos[1] = new Contacto("Gordon", "Freeman", "912222222");
-		vContactos[2] = new Contacto("Yennefer", "de Vengerberg", "973333333");
-		vContactos[3] = new Contacto("José", "Sazatornil", "945444444");
-		vContactos[4] = new Contacto("Martín", "Pescador", "935555555");
-		vContactos[5] = new Contacto("David Robert", "Jones", "976666666");
-		vContactos[6] = new Contacto("Íñigo", "Montoya", "917777777");
-		vContactos[7] = new Contacto("Alyx", "Vance", "95888888");
+		Agenda agenda=new Agenda("Tomás", 10);
 
 		do {
-			switch (Agenda.menu()) {
+			switch (agenda.menu()) {
 			case 1: {
-				Agenda.mostrarContactos(vContactos);
+				agenda.mostrarContactos();
 				System.out.println();
-				 
 				break;
 			}
 
 			case 2: {
-				Agenda.buscarContacto(vContactos);
+				agenda.buscarContacto();
 				break;
 			}
 
 			case 3: {
-				Agenda.nuevoContacto(vContactos);
+				agenda.nuevoContacto();
 				break;
 			}
 
 			case 4: {
-				Agenda.modificarContacto(vContactos);
+				agenda.modificarContacto();
 				break;
 			}
 
 			case 5: {
-				Agenda.eliminarContacto(vContactos);
+				agenda.eliminarContacto();
 				break;
 			}
 
@@ -51,13 +40,11 @@ public class Principal {
 				volver = false;
 				break;
 			}
-
 			}
 			
-			if (volver=true) {
-				volver = Agenda.volverMenu();
+			if (volver==true) {
+				volver = agenda.volverMenu();
 			}
-			
 			
 		} while (volver == true);
 

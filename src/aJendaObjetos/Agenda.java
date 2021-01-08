@@ -1,6 +1,5 @@
 package aJendaObjetos;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Agenda {
@@ -11,16 +10,19 @@ public class Agenda {
 	public Agenda() {
 		propietario = "";
 		vAgenda = new Contacto[10];
+		inicializarVector();
 	}
 
 	public Agenda(String propietario) {
 		this.propietario = propietario;
 		vAgenda = new Contacto[10];
+		inicializarVector();
 	}
 
 	public Agenda(String propietario, int tam) {
 		this.propietario = propietario;
 		vAgenda = new Contacto[tam];
+		inicializarVector();
 	}
 	
 
@@ -28,26 +30,31 @@ public class Agenda {
 		return propietario;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return mostrarContactos(vContactos);;
+		return "asdfasdfasdf";
 	}
-
-
 
 	static Scanner leer = new Scanner(System.in);
 
 	/**
 	 * Inicializar vector
 	 * 
-	 * @param vContactos Vector de contactos.
+	 * @param vAgenda Vector de contactos.
 	 */
-	public static void inicializarVector(Contacto vContactos[]) {
-		for (int i = 0; i < vContactos.length; i++) {
-			vContactos[i] = new Contacto();
+	public void inicializarVector() {
+		for (int i = 0; i < vAgenda.length; i++) {
+			vAgenda[i] = new Contacto();
 		}
+		
+		vAgenda[0] = new Contacto("Juan", "971111111");
+		vAgenda[1] = new Contacto("Gordon", "Freeman", "912222222");
+		vAgenda[2] = new Contacto("Yennefer", "de Vengerberg", "973333333");
+		vAgenda[3] = new Contacto("José", "Sazatornil", "945444444");
+		vAgenda[4] = new Contacto("Martín", "Pescador", "935555555");
+		vAgenda[5] = new Contacto("David Robert", "Jones", "976666666");
+		vAgenda[6] = new Contacto("Íñigo", "Montoya", "917777777");
+		vAgenda[7] = new Contacto("Alyx", "Vance", "95888888");
 	}
 
 	/**
@@ -55,14 +62,15 @@ public class Agenda {
 	 * 
 	 * @return Devuelve al programa principal la opción escogida por el usuario.
 	 */
-	public static int menu() {
+	public int menu() {
 
 		int opcionMenu = 0;
 		boolean error = false;
 
-		System.out.println("--------------------------------------------------");
-		System.out.println("              aJenda - MENÚ PRINCIPAL             ");
-		System.out.println("--------------------------------------------------");
+//		System.out.println("--------------------------------------------------");
+//		System.out.println("              aJenda - MENÚ PRINCIPAL             ");
+//		System.out.println("--------------------------------------------------");
+		cabeceraCentrada();
 		System.out.println("1) Ver contactos          4) Modificar un contacto");
 		System.out.println("2) Buscar un contacto     5) Eliminar un contacto ");
 		System.out.println("3) Añadir un contacto     6) Salir                ");
@@ -93,16 +101,45 @@ public class Agenda {
 		return opcionMenu;
 
 	}
+	
+	public void cabeceraCentrada() {
+		String cabecera1="Agenda de";
+		String cabecera2="MENÚ PRINCIPAL";
+		int ancho=50;
+		int anchoTexto=cabecera1.length()+propietario.length()+cabecera2.length()+3;
+		
+		if (anchoTexto>ancho) {
+			ancho=anchoTexto+3;
+		}
+		
+		for (int i=0; i<ancho; i++) {
+			System.out.print("-");
+		}
+		
+		System.out.println();
+		
+		for (int i=0; i<((ancho-anchoTexto)/2); i++) {
+			System.out.print(" ");
+		}
+		
+		System.out.println(cabecera1 + " " + propietario + " - " + cabecera2);
+		
+		for (int i=0; i<ancho; i++) {
+			System.out.print("-");
+		}
+		
+		System.out.println();
+	}
 
 	/**
 	 * Mostrar contactos
 	 * 
-	 * @param vContactos Vector de contactos.
+	 * @param vAgenda Vector de contactos.
 	 */
-	public static void mostrarContactos(Contacto vContactos[]) {
-		for (int i = 0; i < vContactos.length; i++) {
-			if (!vContactos[i].getNombre().equals("")) {
-				System.out.println("CONTACTO " + (i + 1) + ": " + vContactos[i].toString());
+	public void mostrarContactos() {
+		for (int i = 0; i < vAgenda.length; i++) {
+			if (!vAgenda[i].getNombre().equals("")) {
+				mostrarContacto(i);
 			}
 
 		}
@@ -114,7 +151,7 @@ public class Agenda {
 	 * @return Devuelve si el usuario desea salir del programa (true) o si desea
 	 *         regresar al menú principal (false).
 	 */
-	public static boolean volverMenu() {
+	public boolean volverMenu() {
 
 		return siNo("¿Quieres regresar al menú?");
 	}
@@ -142,13 +179,13 @@ public class Agenda {
 	/**
 	 * Busca el último contacto libre en el vector.
 	 * 
-	 * @param vContactos Vector de contactos.
+	 * @param vAgenda Vector de contactos.
 	 * @return Última posición libre del vector. Si no queda ninguno se devuelve el
 	 *         valor -1.
 	 */
-	private static int buscarUltimoContacto(Contacto vContactos[]) {
-		for (int i = 0; i < vContactos.length; i++) {
-			if (vContactos[i].getNombre().equals("")) {
+	private int buscarUltimoContacto() {
+		for (int i = 0; i < vAgenda.length; i++) {
+			if (vAgenda[i].getNombre().equals("")) {
 				return i;
 			}
 		}
@@ -159,20 +196,20 @@ public class Agenda {
 	/**
 	 * Añadir un nuevo contacto.
 	 * 
-	 * @param vContactos Vector de contactos.
+	 * @param vAgenda Vector de contactos.
 	 */
-	public static void nuevoContacto(Contacto vContactos[]) {
+	public void nuevoContacto() {
 
-		int ultimoContacto = buscarUltimoContacto(vContactos);
+		int ultimoContacto = buscarUltimoContacto();
 		leer = new Scanner(System.in);
 
 		if (ultimoContacto != -1) {
 			System.out.print("Introduce el nombre del nuevo contacto: > ");
-			vContactos[ultimoContacto].setNombre(leer.nextLine());
+			vAgenda[ultimoContacto].setNombre(leer.nextLine());
 			System.out.print("Introduce el apellido del nuevo contacto: > ");
-			vContactos[ultimoContacto].setApellido(leer.nextLine());
+			vAgenda[ultimoContacto].setApellido(leer.nextLine());
 			System.out.print("Introduce el teléfono del nuevo contacto: > ");
-			vContactos[ultimoContacto].setTelefono(leer.nextLine());
+			vAgenda[ultimoContacto].setTelefono(leer.nextLine());
 
 			System.out
 					.println("\nEl contacto se ha añadido correctamente como CONTACTO " + (ultimoContacto + 1) + ".\n");
@@ -185,41 +222,45 @@ public class Agenda {
 	/**
 	 * Reorganiza los contactos para que no haya huecos libres.
 	 * 
-	 * @param vContactos Vector de contactos que se reordenará.
+	 * @param vAgenda Vector de contactos que se reordenará.
 	 */
-	private static void reordenarContactos(Contacto vContactos[]) {
-		for (int i = 0; i < vContactos.length - 1; i++) {
-			if (vContactos[i].getNombre().equals("")) {
-				vContactos[i] = vContactos[i + 1];
-				vContactos[i + 1] = new Contacto();
+	private void reordenarContactos() {
+		for (int i = 0; i < vAgenda.length - 1; i++) {
+			if (vAgenda[i].getNombre().equals("")) {
+				vAgenda[i] = vAgenda[i + 1];
+				vAgenda[i + 1] = new Contacto();
 			}
 		}
 	}
 
+	public void mostrarContacto(int id) {
+		System.out.println("  CONTACTO " + (id+1) + ": " + vAgenda[id].toString());
+	}
+	
 	/**
 	 * Modificar un contacto existente.
 	 * 
-	 * @param vContactos Vector de contactos.
+	 * @param vAgenda Vector de contactos.
 	 */
-	public static void modificarContacto(Contacto vContactos[]) {
+	public void modificarContacto() {
 		leer = new Scanner(System.in);
 		int id = 0;
 
 		System.out.print("Introduce el ID del contacto que deseas modificar: > ");
-		id = leer.nextInt();
+		id = leer.nextInt()-1;
 		System.out.println("\nSe modificará el siguiente contacto:");
-		System.out.println("CONTACTO " + id + ": " + vContactos[id - 1].toString());
+		mostrarContacto(id);
 		System.out.println();
 		if (siNo("¿Estás seguro?") == true) {
 			leer = new Scanner(System.in);
 			System.out.print("Introduce el nuevo nombre del contacto: > ");
-			vContactos[id - 1].setNombre(leer.nextLine());
+			vAgenda[id].setNombre(leer.nextLine());
 			System.out.print("Introduce el nuevo apellido del contacto: > ");
-			vContactos[id - 1].setApellido(leer.nextLine());
+			vAgenda[id].setApellido(leer.nextLine());
 			System.out.print("Introduce el nuevo teléfono del contacto: > ");
-			vContactos[id - 1].setTelefono(leer.nextLine());
+			vAgenda[id].setTelefono(leer.nextLine());
 
-			System.out.println("CONTACTO " + id + " se ha modificado correctamente.");
+			System.out.println("\nCONTACTO " + id + " se ha modificado correctamente.\n");
 
 		} else {
 			System.out.println("Se ha cancelado la operación. No se han realizado cambios.");
@@ -229,20 +270,20 @@ public class Agenda {
 	/**
 	 * Elimina un contacto especificado por el usuario.
 	 * 
-	 * @param vContactos Vector de contactos.
+	 * @param vAgenda Vector de contactos.
 	 */
-	public static void eliminarContacto(Contacto vContactos[]) {
+	public void eliminarContacto() {
 		leer = new Scanner(System.in);
 		int id = 0;
 
 		System.out.print("Introduce el ID del contacto que deseas eliminar: > ");
 		id = leer.nextInt();
 		System.out.println("\nSe eliminará el siguiente contacto:");
-		System.out.println("CONTACTO " + id + ": " + vContactos[id - 1].toString());
+		System.out.println("CONTACTO " + id + ": " + vAgenda[id - 1].toString());
 		System.out.println();
 		if (siNo("¿Estás seguro?") == true) {
-			vContactos[id - 1] = new Contacto();
-			reordenarContactos(vContactos);
+			vAgenda[id - 1] = new Contacto();
+			reordenarContactos();
 
 			System.out.println("CONTACTO " + id + " se ha eliminado correctamente.");
 			System.out.println("Los contactos se han reordenado.\n");
@@ -251,7 +292,7 @@ public class Agenda {
 		}
 	}
 
-	public static void buscarContacto(Contacto vContactos[]) {
+	public void buscarContacto() {
 
 		String userInput = "";
 		int coincidenciaNombre = 0, coincidenciaApell = 0, coincidenciaTlf = 0;
@@ -261,45 +302,45 @@ public class Agenda {
 		userInput = leer.nextLine();
 		System.out.println();
 
-		for (int i = 0; i < vContactos.length; i++) {
-			for (int j = 0; j < vContactos[i].getNombre().length() - userInput.length(); j++) {
+		for (int i = 0; i < vAgenda.length; i++) {
+			for (int j = 0; j < vAgenda[i].getNombre().length() - userInput.length(); j++) {
 				if (userInput.substring(0, userInput.length())
-						.equalsIgnoreCase(vContactos[i].getNombre().substring(j, j + userInput.length()))) {
+						.equalsIgnoreCase(vAgenda[i].getNombre().substring(j, j + userInput.length()))) {
 					if (coincidenciaNombre == 0) {
 						System.out.println("Se han encontrado las siguientes coincidencias de nombre: ");
 					}
 					coincidenciaNombre++;
-					System.out.println("  CONTACTO " + (i + 1) + ": " + vContactos[i].toString());
+					System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
 					break;
 				}
 			}
 		}
 
-		for (int i = 0; i < vContactos.length; i++) {
+		for (int i = 0; i < vAgenda.length; i++) {
 
-			for (int j = 0; j < vContactos[i].getApellido().length() - userInput.length(); j++) {
+			for (int j = 0; j < vAgenda[i].getApellido().length() - userInput.length(); j++) {
 				if (userInput.substring(0, userInput.length())
-						.equalsIgnoreCase(vContactos[i].getApellido().substring(j, j + userInput.length()))) {
+						.equalsIgnoreCase(vAgenda[i].getApellido().substring(j, j + userInput.length()))) {
 					if (coincidenciaApell == 0) {
 						System.out.println("\nSe han encontrado las siguientes coincidencias de apellido: ");
 					}
 					coincidenciaApell++;
-					System.out.println("  CONTACTO " + (i + 1) + ": " + vContactos[i].toString());
+					System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
 					break;
 				}
 			}
 		}
 
-		for (int i = 0; i < vContactos.length; i++) {
+		for (int i = 0; i < vAgenda.length; i++) {
 
-			for (int j = 0; j < vContactos[i].getTelefono().length() - userInput.length(); j++) {
+			for (int j = 0; j < vAgenda[i].getTelefono().length() - userInput.length(); j++) {
 				if (userInput.substring(0, userInput.length())
-						.equalsIgnoreCase(vContactos[i].getTelefono().substring(j, j + userInput.length()))) {
+						.equalsIgnoreCase(vAgenda[i].getTelefono().substring(j, j + userInput.length()))) {
 					if (coincidenciaTlf == 0) {
 						System.out.println("\nSe han encontrado las siguientes coincidencias de teléfono: ");
 					}
 					coincidenciaTlf++;
-					System.out.println("  CONTACTO " + (i + 1) + ": " + vContactos[i].toString());
+					System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
 					break;
 				}
 			}
