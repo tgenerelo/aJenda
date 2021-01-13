@@ -143,6 +143,7 @@ public class Agenda {
 			}
 
 		}
+		System.out.println();
 	}
 
 	/**

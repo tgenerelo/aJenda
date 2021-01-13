@@ -12,7 +12,6 @@ public class Principal {
 			switch (agenda.menu()) {
 			case 1: {
 				agenda.mostrarContactos();
-				System.out.println();
 				break;
 			}
 
