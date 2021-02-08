@@ -26,6 +26,10 @@ public class Agenda {
 	}
 	
 
+	public Contacto[] getvAgenda() {
+		return vAgenda;
+	}
+
 	public String getPropietario() {
 		return propietario;
 	}
@@ -99,6 +103,8 @@ public class Agenda {
 		} while (error == true);
 
 		return opcionMenu;
+
+
 
 	}
 	

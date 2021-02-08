@@ -1,5 +1,7 @@
 package aJendaObjetos;
 
+import IODatos.IODatos;
+
 public class Principal {
 
 	public static void main(String[] args) {
@@ -36,6 +38,8 @@ public class Principal {
 			}
 
 			case 6: {
+				IODatos guardar = new IODatos();
+				guardar.guardarVector(agenda.getvAgenda());
 				volver = false;
 				break;
 			}
