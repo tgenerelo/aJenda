@@ -227,6 +227,21 @@ public class Agenda {
 	}
 
 	/**
+	 * Añadir un nuevo contacto.
+	 * 
+	 * @param vAgenda Vector de contactos.
+	 */
+	public void nuevoContacto(Contacto contacto) {
+
+		int ultimoContacto = buscarUltimoContacto();
+		leer = new Scanner(System.in);
+
+		if (ultimoContacto != -1) {
+			vAgenda[ultimoContacto] = contacto;
+		} 
+	}
+	
+	/**
 	 * Reorganiza los contactos para que no haya huecos libres.
 	 * 
 	 * @param vAgenda Vector de contactos que se reordenará.

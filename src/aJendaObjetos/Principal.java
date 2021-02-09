@@ -8,7 +8,8 @@ public class Principal {
 
 		boolean volver = true;
 
-		Agenda agenda=new Agenda("Tomás", 10);
+		IODatos io = new IODatos();
+		Agenda agenda= io.leerFichero("Tomás") ;
 
 		do {
 			switch (agenda.menu()) {
@@ -39,7 +40,7 @@ public class Principal {
 
 			case 6: {
 				IODatos guardar = new IODatos();
-				guardar.guardarVector(agenda.getvAgenda());
+				guardar.guardarVector(agenda);
 				volver = false;
 				break;
 			}
