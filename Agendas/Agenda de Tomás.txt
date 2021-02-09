@@ -1,0 +1,8 @@
+Juan;;971111111;
+Gordon;Freeman;912222222;
+Yennefer;de Vengerberg;973333333;
+José;Sazatornil;945444444;
+Martín;Pescador;935555555;
+David Robert;Jones;976666666;
+Íñigo;Montoya;917777777;
+Alyx;Vance;95888888;
