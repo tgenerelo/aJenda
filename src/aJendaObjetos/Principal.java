@@ -42,6 +42,13 @@ public class Principal {
 				IODatos guardar = new IODatos();
 				guardar.guardarVector(agenda);
 				volver = false;
+				System.out.println("Los cambios se han guardado correctamente.\n");
+				break;
+			}
+			
+			case 7: {
+				volver = false;
+				System.out.println("Los cambios no se han guardado.\n");
 				break;
 			}
 			}

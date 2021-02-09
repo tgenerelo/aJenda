@@ -6,16 +6,18 @@ public class Agenda {
 
 	private String propietario;
 	private Contacto[] vAgenda;
+	
+	private final int NUMCONTACTOS = 100;
 
 	public Agenda() {
 		propietario = "";
-		vAgenda = new Contacto[10];
+		vAgenda = new Contacto[NUMCONTACTOS];
 //		inicializarVector();
 	}
 
 	public Agenda(String propietario) {
 		this.propietario = propietario;
-		vAgenda = new Contacto[10];
+		vAgenda = new Contacto[NUMCONTACTOS];
 //		inicializarVector();
 	}
 
@@ -41,25 +43,25 @@ public class Agenda {
 
 	static Scanner leer = new Scanner(System.in);
 
-	/**
-	 * Inicializar vector
-	 * 
-	 * @param vAgenda Vector de contactos.
-	 */
-	public void inicializarVector() {
-		for (int i = 0; i < vAgenda.length; i++) {
-			vAgenda[i] = new Contacto();
-		}
-		
-		vAgenda[0] = new Contacto("Juan", "971111111");
-		vAgenda[1] = new Contacto("Gordon", "Freeman", "912222222");
-		vAgenda[2] = new Contacto("Yennefer", "de Vengerberg", "973333333");
-		vAgenda[3] = new Contacto("José", "Sazatornil", "945444444");
-		vAgenda[4] = new Contacto("Martín", "Pescador", "935555555");
-		vAgenda[5] = new Contacto("David Robert", "Jones", "976666666");
-		vAgenda[6] = new Contacto("Íñigo", "Montoya", "917777777");
-		vAgenda[7] = new Contacto("Alyx", "Vance", "95888888");
-	}
+//	/**
+//	 * Inicializar vector
+//	 * 
+//	 * @param vAgenda Vector de contactos.
+//	 */
+//	public void inicializarVector() {
+//		for (int i = 0; i < vAgenda.length; i++) {
+//			vAgenda[i] = new Contacto();
+//		}
+//		
+//		vAgenda[0] = new Contacto("Juan", "971111111");
+//		vAgenda[1] = new Contacto("Gordon", "Freeman", "912222222");
+//		vAgenda[2] = new Contacto("Yennefer", "de Vengerberg", "973333333");
+//		vAgenda[3] = new Contacto("José", "Sazatornil", "945444444");
+//		vAgenda[4] = new Contacto("Martín", "Pescador", "935555555");
+//		vAgenda[5] = new Contacto("David Robert", "Jones", "976666666");
+//		vAgenda[6] = new Contacto("Íñigo", "Montoya", "917777777");
+//		vAgenda[7] = new Contacto("Alyx", "Vance", "95888888");
+//	}
 
 	/**
 	 * Menú principal
@@ -75,9 +77,10 @@ public class Agenda {
 //		System.out.println("              aJenda - MENÚ PRINCIPAL             ");
 //		System.out.println("--------------------------------------------------");
 		cabeceraCentrada();
-		System.out.println("1) Ver contactos          4) Modificar un contacto");
-		System.out.println("2) Buscar un contacto     5) Eliminar un contacto ");
-		System.out.println("3) Añadir un contacto     6) Salir                ");
+		System.out.println("1) Ver contactos          5) Eliminar un contacto ");
+		System.out.println("2) Buscar un contacto                             ");
+		System.out.println("3) Añadir un contacto     6) Guardar y salir      ");
+		System.out.println("4) Modificar un contacto  7) Salir sin guardar    ");
 
 		System.out.println();
 
@@ -93,7 +96,7 @@ public class Agenda {
 				leer = new Scanner(System.in);
 			}
 
-			if (error == false && (opcionMenu < 1 || opcionMenu > 6)) {
+			if (error == false && (opcionMenu < 1 || opcionMenu > 7)) {
 				error = true;
 				System.out.println("Opción no válida. Inténtalo de nuevo.");
 			}
@@ -329,47 +332,55 @@ public class Agenda {
 		System.out.println();
 
 		for (int i = 0; i < vAgenda.length; i++) {
-			for (int j = 0; j < vAgenda[i].getNombre().length() - userInput.length(); j++) {
-				if (userInput.substring(0, userInput.length())
-						.equalsIgnoreCase(vAgenda[i].getNombre().substring(j, j + userInput.length()))) {
-					if (coincidenciaNombre == 0) {
-						System.out.println("Se han encontrado las siguientes coincidencias de nombre: ");
+			if (vAgenda[i]!=null) {
+				for (int j = 0; j < vAgenda[i].getNombre().length() - userInput.length(); j++) {
+					if (userInput.substring(0, userInput.length())
+							.equalsIgnoreCase(vAgenda[i].getNombre().substring(j, j + userInput.length()))) {
+						if (coincidenciaNombre == 0) {
+							System.out.println("Se han encontrado las siguientes coincidencias de nombre: ");
+						}
+						coincidenciaNombre++;
+						System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
+						break;
 					}
-					coincidenciaNombre++;
-					System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
-					break;
 				}
 			}
+			
+		}
+
+		for (int i = 0; i < vAgenda.length; i++) {
+			if (vAgenda[i]!=null) {
+				for (int j = 0; j < vAgenda[i].getApellido().length() - userInput.length(); j++) {
+					if (userInput.substring(0, userInput.length())
+							.equalsIgnoreCase(vAgenda[i].getApellido().substring(j, j + userInput.length()))) {
+						if (coincidenciaApell == 0) {
+							System.out.println("\nSe han encontrado las siguientes coincidencias de apellido: ");
+						}
+						coincidenciaApell++;
+						System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
+						break;
+					}
+				}
+			}
+			
 		}
 
 		for (int i = 0; i < vAgenda.length; i++) {
 
-			for (int j = 0; j < vAgenda[i].getApellido().length() - userInput.length(); j++) {
-				if (userInput.substring(0, userInput.length())
-						.equalsIgnoreCase(vAgenda[i].getApellido().substring(j, j + userInput.length()))) {
-					if (coincidenciaApell == 0) {
-						System.out.println("\nSe han encontrado las siguientes coincidencias de apellido: ");
+			if (vAgenda[i]!=null) {
+				for (int j = 0; j < vAgenda[i].getTelefono().length() - userInput.length(); j++) {
+					if (userInput.substring(0, userInput.length())
+							.equalsIgnoreCase(vAgenda[i].getTelefono().substring(j, j + userInput.length()))) {
+						if (coincidenciaTlf == 0) {
+							System.out.println("\nSe han encontrado las siguientes coincidencias de teléfono: ");
+						}
+						coincidenciaTlf++;
+						System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
+						break;
 					}
-					coincidenciaApell++;
-					System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
-					break;
 				}
 			}
-		}
-
-		for (int i = 0; i < vAgenda.length; i++) {
-
-			for (int j = 0; j < vAgenda[i].getTelefono().length() - userInput.length(); j++) {
-				if (userInput.substring(0, userInput.length())
-						.equalsIgnoreCase(vAgenda[i].getTelefono().substring(j, j + userInput.length()))) {
-					if (coincidenciaTlf == 0) {
-						System.out.println("\nSe han encontrado las siguientes coincidencias de teléfono: ");
-					}
-					coincidenciaTlf++;
-					System.out.println("  CONTACTO " + (i + 1) + ": " + vAgenda[i].toString());
-					break;
-				}
-			}
+			
 		}
 
 		if (coincidenciaNombre == 0 & coincidenciaApell == 0 & coincidenciaTlf == 0) {

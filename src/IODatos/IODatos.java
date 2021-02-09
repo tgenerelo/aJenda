@@ -28,10 +28,7 @@ public class IODatos {
 
 	public Agenda leerFichero(String propietario) {
 		Agenda agenda = new Agenda();
-		String agendaFich = "Agenda de " + propietario;
-		File directorio = new File("Agendas");
-//		fichero = new File(directorio + agendaFich + ".txt");
-		fichero = new File("Agendas/Agenda de Tomás.txt");
+		fichero = new File(("Agendas/Agenda de " + propietario + ".txt"));
 		String aux = null;
 		int cont = 0;
 		String linea = "";
@@ -41,11 +38,12 @@ public class IODatos {
 
 		if (fichero.exists()) {
 			agenda = new Agenda(propietario);
+			
 			try {
 
 				fr = new FileReader(fichero);
 				leer = new Scanner(fr);
-
+				
 				while (leer.hasNext()) {
 					cont = 0;
 					aux = leer.nextLine();
