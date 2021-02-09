@@ -6,5 +6,3 @@ Martín;Pescador;935555555;
 David Robert;Jones;976666666;
 Íñigo;Montoya;917777777;
 Alyx;Vance;95888888;
-;;;
-;;;

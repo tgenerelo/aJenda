@@ -10,19 +10,19 @@ public class Agenda {
 	public Agenda() {
 		propietario = "";
 		vAgenda = new Contacto[10];
-		inicializarVector();
+//		inicializarVector();
 	}
 
 	public Agenda(String propietario) {
 		this.propietario = propietario;
 		vAgenda = new Contacto[10];
-		inicializarVector();
+//		inicializarVector();
 	}
 
 	public Agenda(String propietario, int tam) {
 		this.propietario = propietario;
 		vAgenda = new Contacto[tam];
-		inicializarVector();
+//		inicializarVector();
 	}
 	
 
@@ -143,8 +143,9 @@ public class Agenda {
 	 * @param vAgenda Vector de contactos.
 	 */
 	public void mostrarContactos() {
+		reordenarContactos();
 		for (int i = 0; i < vAgenda.length; i++) {
-			if (!vAgenda[i].getNombre().equals("")) {
+			if (vAgenda[i]!=null) {
 				mostrarContacto(i);
 			}
 
@@ -192,7 +193,7 @@ public class Agenda {
 	 */
 	private int buscarUltimoContacto() {
 		for (int i = 0; i < vAgenda.length; i++) {
-			if (vAgenda[i].getNombre().equals("")) {
+			if (vAgenda[i] == null) {
 				return i;
 			}
 		}
@@ -209,15 +210,18 @@ public class Agenda {
 
 		int ultimoContacto = buscarUltimoContacto();
 		leer = new Scanner(System.in);
+		Contacto contacto = new Contacto();
 
 		if (ultimoContacto != -1) {
 			System.out.print("Introduce el nombre del nuevo contacto: > ");
-			vAgenda[ultimoContacto].setNombre(leer.nextLine());
+			contacto.setNombre(leer.nextLine());
 			System.out.print("Introduce el apellido del nuevo contacto: > ");
-			vAgenda[ultimoContacto].setApellido(leer.nextLine());
+			contacto.setApellido(leer.nextLine());
 			System.out.print("Introduce el teléfono del nuevo contacto: > ");
-			vAgenda[ultimoContacto].setTelefono(leer.nextLine());
+			contacto.setTelefono(leer.nextLine());
 
+			vAgenda[ultimoContacto] = contacto;
+			
 			System.out
 					.println("\nEl contacto se ha añadido correctamente como CONTACTO " + (ultimoContacto + 1) + ".\n");
 
@@ -248,9 +252,9 @@ public class Agenda {
 	 */
 	private void reordenarContactos() {
 		for (int i = 0; i < vAgenda.length - 1; i++) {
-			if (vAgenda[i].getNombre().equals("")) {
+			if (vAgenda[i]==null) {
 				vAgenda[i] = vAgenda[i + 1];
-				vAgenda[i + 1] = new Contacto();
+				vAgenda[i + 1] = null;
 			}
 		}
 	}
@@ -304,7 +308,7 @@ public class Agenda {
 		System.out.println("CONTACTO " + id + ": " + vAgenda[id - 1].toString());
 		System.out.println();
 		if (siNo("¿Estás seguro?") == true) {
-			vAgenda[id - 1] = new Contacto();
+			vAgenda[id - 1] = null;
 			reordenarContactos();
 
 			System.out.println("CONTACTO " + id + " se ha eliminado correctamente.");

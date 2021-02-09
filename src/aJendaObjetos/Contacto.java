@@ -48,7 +48,7 @@ public class Contacto {
 
 	@Override
 	public String toString() {
-		if (apellido.equals("")) {
+		if (apellido == null) {
 			return nombre + " - " + telefono;
 		} else {
 			return nombre + " " + apellido + " - " + telefono;

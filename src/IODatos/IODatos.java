@@ -42,11 +42,11 @@ public class IODatos {
 		if (fichero.exists()) {
 			agenda = new Agenda(propietario);
 			try {
-				
+
 				fr = new FileReader(fichero);
 				leer = new Scanner(fr);
-				
-				do {
+
+				while (leer.hasNext()) {
 					cont = 0;
 					aux = leer.nextLine();
 					for (int i = 0; i < aux.length(); i++) {
@@ -68,13 +68,12 @@ public class IODatos {
 								linea = "";
 								break;
 							}
-							i++;
+
 						}
 					}
 					Contacto contacto = new Contacto(nombre, apellido, telefono);
 					agenda.nuevoContacto(contacto);
-				} while (leer.hasNext());
-				
+				}
 
 			} catch (FileNotFoundException e) {
 
@@ -82,7 +81,7 @@ public class IODatos {
 				try {
 					fr.close();
 				} catch (IOException e) {
-					
+
 				}
 			}
 			return agenda;
@@ -110,10 +109,18 @@ public class IODatos {
 			fw = new FileWriter(ruta);
 			pw = new PrintWriter(ruta);
 
-			for (Contacto contacto : agenda.getvAgenda()) {
-				pw.print(contacto.getNombre() + ";");
-				pw.print(contacto.getApellido() + ";");
-				pw.println(contacto.getTelefono() + ";");
+			for (int i = 0; i < agenda.getvAgenda().length; i++) {
+
+				if (agenda.getvAgenda()[i] != null) {
+					if (i>0)
+						pw.println();
+					pw.print(agenda.getvAgenda()[i].getNombre() + ";");
+					pw.print(agenda.getvAgenda()[i].getApellido() + ";");
+					pw.print(agenda.getvAgenda()[i].getTelefono() + ";");
+				}
+				
+
+
 			}
 		} catch (Exception e) {
 

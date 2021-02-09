@@ -9,7 +9,7 @@ public class Principal {
 		boolean volver = true;
 
 		IODatos io = new IODatos();
-		Agenda agenda= io.leerFichero("Tomás") ;
+		Agenda agenda= io.leerFichero("Tomás");
 
 		do {
 			switch (agenda.menu()) {
