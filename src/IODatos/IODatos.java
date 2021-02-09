@@ -29,6 +29,11 @@ public class IODatos {
 	public Agenda leerFichero(String propietario) {
 		Agenda agenda = new Agenda();
 		fichero = new File(("Agendas/Agenda de " + propietario + ".txt"));
+		if (!fichero.exists()) {
+			fichero = new File("Agendas/Agenda de " + propietario + ".txt");
+			return new Agenda(propietario);
+		}
+		
 		String aux = null;
 		int cont = 0;
 		String linea = "";

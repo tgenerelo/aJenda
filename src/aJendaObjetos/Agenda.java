@@ -7,6 +7,8 @@ public class Agenda {
 	private String propietario;
 	private Contacto[] vAgenda;
 	
+	static Scanner leer = new Scanner(System.in);
+	
 	private final int NUMCONTACTOS = 100;
 
 	public Agenda() {
@@ -40,8 +42,6 @@ public class Agenda {
 	public String toString() {
 		return "asdfasdfasdf";
 	}
-
-	static Scanner leer = new Scanner(System.in);
 
 //	/**
 //	 * Inicializar vector
@@ -77,10 +77,10 @@ public class Agenda {
 //		System.out.println("              aJenda - MENÚ PRINCIPAL             ");
 //		System.out.println("--------------------------------------------------");
 		cabeceraCentrada();
-		System.out.println("1) Ver contactos          5) Eliminar un contacto ");
-		System.out.println("2) Buscar un contacto                             ");
-		System.out.println("3) Añadir un contacto     6) Guardar y salir      ");
-		System.out.println("4) Modificar un contacto  7) Salir sin guardar    ");
+		System.out.println(" 1) Ver contactos          5) Eliminar un contacto ");
+		System.out.println(" 2) Buscar un contacto                             ");
+		System.out.println(" 3) Añadir un contacto     6) Guardar y salir      ");
+		System.out.println(" 4) Modificar un contacto  7) Salir sin guardar    ");
 
 		System.out.println();
 
@@ -114,30 +114,39 @@ public class Agenda {
 	public void cabeceraCentrada() {
 		String cabecera1="Agenda de";
 		String cabecera2="MENÚ PRINCIPAL";
-		int ancho=50;
+		int ancho=52;
 		int anchoTexto=cabecera1.length()+propietario.length()+cabecera2.length()+3;
 		
 		if (anchoTexto>ancho) {
 			ancho=anchoTexto+3;
 		}
 		
-		for (int i=0; i<ancho; i++) {
-			System.out.print("-");
+		System.out.print("┌");
+		for (int i=0; i<ancho-2; i++) {
+			System.out.print("─");
 		}
 		
-		System.out.println();
+		System.out.println("┐");
+		System.out.print("│");
 		
-		for (int i=0; i<((ancho-anchoTexto)/2); i++) {
+		for (int i=0; i<((ancho-(anchoTexto+2))/2); i++) {
 			System.out.print(" ");
 		}
 		
-		System.out.println(cabecera1 + " " + propietario + " - " + cabecera2);
+		System.out.print(cabecera1 + " " + propietario + " - " + cabecera2);
 		
-		for (int i=0; i<ancho; i++) {
-			System.out.print("-");
+		for (int i=0; i<((ancho-(anchoTexto+2))/2); i++) {
+			System.out.print(" ");
 		}
 		
-		System.out.println();
+		System.out.println("│");
+		
+		System.out.print("└");
+		for (int i=0; i<ancho-2; i++) {
+			System.out.print("─");
+		}
+		
+		System.out.println("┘");
 	}
 
 	/**
@@ -146,13 +155,19 @@ public class Agenda {
 	 * @param vAgenda Vector de contactos.
 	 */
 	public void mostrarContactos() {
+		boolean vacia=true;
 		reordenarContactos();
 		for (int i = 0; i < vAgenda.length; i++) {
 			if (vAgenda[i]!=null) {
 				mostrarContacto(i);
-			}
-
+				vacia=false;
+			}	
 		}
+		
+		if (vacia==true) {
+			System.out.println("La agenda está vacía. No hay contactos que mostrar.");
+		}
+		
 		System.out.println();
 	}
 
