@@ -28,12 +28,12 @@ public class IODatos {
 
 	public Agenda leerFichero(String propietario) {
 		Agenda agenda = new Agenda();
-		fichero = new File(("Agendas/Agenda de " + propietario + ".txt"));
+		fichero = new File(("Agendas/Agenda de " + propietario));
 		if (!fichero.exists()) {
-			fichero = new File("Agendas/Agenda de " + propietario + ".txt");
+			fichero = new File("Agendas/Agenda de " + propietario);
 			return new Agenda(propietario);
 		}
-		
+
 		String aux = null;
 		int cont = 0;
 		String linea = "";
@@ -43,12 +43,12 @@ public class IODatos {
 
 		if (fichero.exists()) {
 			agenda = new Agenda(propietario);
-			
+
 			try {
 
 				fr = new FileReader(fichero);
 				leer = new Scanner(fr);
-				
+
 				while (leer.hasNext()) {
 					cont = 0;
 					aux = leer.nextLine();
@@ -58,20 +58,26 @@ public class IODatos {
 						} else {
 							cont++;
 							switch (cont) {
+
 							case 1:
 								nombre = linea;
 								linea = "";
 								break;
+
 							case 2:
 								apellido = linea;
+								if (apellido.equals(""))
+									apellido = null;
 								linea = "";
 								break;
+
 							case 3:
 								telefono = linea;
+								if (telefono.equals(""))
+									telefono = null;
 								linea = "";
 								break;
 							}
-
 						}
 					}
 					Contacto contacto = new Contacto(nombre, apellido, telefono);
@@ -79,17 +85,17 @@ public class IODatos {
 				}
 
 			} catch (FileNotFoundException e) {
-
+				System.out.println("ERROR 3: No se ha encontrado el archivo.");
 			} finally {
 				try {
 					fr.close();
 				} catch (IOException e) {
-
+					System.out.println("ERROR 4: Error al cerrar fr.");
 				}
 			}
 			return agenda;
 		} else {
-			System.out.println("ERROR: No se encuentra el archivo.");
+			System.out.println("ERROR 1: No se encuentra el archivo.");
 		}
 
 		return null;
@@ -99,7 +105,7 @@ public class IODatos {
 
 		String agendaFich = "Agenda de " + agenda.getPropietario();
 		File directorio = new File("Agendas");
-		fichero = new File(agendaFich + ".txt");
+		fichero = new File(agendaFich);
 		String ruta = directorio + "/" + fichero;
 
 		if (!directorio.exists())
@@ -115,27 +121,33 @@ public class IODatos {
 			for (int i = 0; i < agenda.getvAgenda().length; i++) {
 
 				if (agenda.getvAgenda()[i] != null) {
-					if (i>0)
+					if (i > 0)
 						pw.println();
-					pw.print(agenda.getvAgenda()[i].getNombre() + ";");
-					pw.print(agenda.getvAgenda()[i].getApellido() + ";");
-					pw.print(agenda.getvAgenda()[i].getTelefono() + ";");
+
+					if (agenda.getvAgenda()[i].getNombre() != null)
+						pw.print(agenda.getvAgenda()[i].getNombre());
+					pw.print(";");
+
+					if (agenda.getvAgenda()[i].getApellido() != null)
+						pw.print(agenda.getvAgenda()[i].getApellido());
+					pw.print(";");
+
+					if (agenda.getvAgenda()[i].getTelefono() != null)
+						pw.print(agenda.getvAgenda()[i].getTelefono());
+					pw.print(";");
 				}
-				
-
-
 			}
 		} catch (Exception e) {
-
+			
 		} finally {
-			pw.close();
 			try {
+				pw.close();
 				fw.close();
+//				fr.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("ERROR 2: Hubo un problema cerrando pw, fw o fr.");
 			}
-//			fr.close();
+
 		}
 
 	}

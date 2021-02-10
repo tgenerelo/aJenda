@@ -48,13 +48,19 @@ public class Contacto {
 
 	@Override
 	public String toString() {
-		if (apellido == null) {
-			return nombre + " - " + telefono;
+		if (apellido != null) {
+			if (telefono != null) {
+				return nombre + " " + apellido + " - " + telefono;
+			} else {
+				return nombre + " " + apellido;
+			}
 		} else {
-			return nombre + " " + apellido + " - " + telefono;
+			if (telefono != null) {
+				return nombre + " - " + telefono;
+			} else {
+				return nombre;
+			}
 		}
-		
-
 	}
 
 }
